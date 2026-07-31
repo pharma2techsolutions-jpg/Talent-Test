@@ -20,7 +20,19 @@
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
-        body { background: var(--bg); color: #333; min-height: 100vh; display: flex; flex-direction: column; }
+        
+        /* ANTI-COPY & DISABLE TEXT SELECTION */
+        body { 
+            background: var(--bg); 
+            color: #333; 
+            min-height: 100vh; 
+            display: flex; 
+            flex-direction: column;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
 
         /* BRANDED HEADER */
         header { 
@@ -102,7 +114,7 @@
         .btn-review { background: var(--review); color: white; }
         .btn-review:hover { background: #71279b; }
 
-        /* CERTIFICATE PORTAL BUTTON (SHINE EFFECT) */
+        /* CERTIFICATE PORTAL BUTTON (ACTIVE & LOCKED STATES) */
         .btn-cert-portal {
             background: linear-gradient(135deg, #10b981 0%, #059669 100%);
             color: white !important;
@@ -121,21 +133,20 @@
             position: relative;
             overflow: hidden;
             border: 1px solid #34d399;
+            text-decoration: none;
         }
         .btn-cert-portal:hover {
             transform: translateY(-2px);
             box-shadow: 0 10px 25px rgba(16, 185, 129, 0.5);
             background: linear-gradient(135deg, #059669 0%, #047857 100%);
         }
-        .btn-cert-portal::after {
-            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
-            background: linear-gradient(60deg, transparent, rgba(255,255,255,0.25), transparent);
-            transform: rotate(30deg); animation: shine 3s infinite;
-        }
-        @keyframes shine {
-            0% { transform: translateX(-100%) rotate(30deg); }
-            20% { transform: translateX(100%) rotate(30deg); }
-            100% { transform: translateX(100%) rotate(30deg); }
+        .btn-cert-locked {
+            background: #cbd5e1 !important;
+            color: #64748b !important;
+            border: 1px solid #94a3b8 !important;
+            cursor: not-allowed !important;
+            box-shadow: none !important;
+            transform: none !important;
         }
 
         /* NAVIGATION BUTTON CONTAINER */
@@ -190,49 +201,57 @@
 
         footer { background: var(--dark); color: #94a3b8; text-align: center; padding: 15px; font-size: 0.78rem; margin-top: auto; }
 
-        /* MOBILE STICKY BOTTOM NAVIGATION BAR & OPTIMIZATION */
+        .palette-toggle-btn { display: none; }
+        .palette-content { display: block; }
+
+        /* OPTIMIZED MOBILE VIEW */
         @media (max-width: 768px) {
-            header { padding: 12px 4%; flex-direction: column; text-align: center; gap: 6px; }
-            .logo-main { font-size: 1.3rem; }
-            .logo-sub { font-size: 0.72rem; }
-            .card { padding: 18px 12px; margin-bottom: 15px; }
-            .portal-title { font-size: 1.2rem; }
-            
-            .exam-layout { flex-direction: column-reverse; gap: 15px; }
-            .exam-sidebar { width: 100%; padding: 12px; }
-            .palette-grid { grid-template-columns: repeat(8, 1fr); max-height: 120px; }
-            
-            /* STICKY BOTTOM BAR FOR MOBILE ASSESSMENT */
-            .nav-btn-container {
-                position: fixed;
-                bottom: 0;
-                left: 0;
-                width: 100%;
-                background: #ffffff;
-                padding: 10px 12px;
-                box-shadow: 0 -4px 15px rgba(0,0,0,0.12);
-                border-top: 1px solid #e2e8f0;
-                z-index: 1000;
-                margin-top: 0;
-                display: flex;
-                flex-wrap: nowrap;
+            header { padding: 6px 10px !important; flex-direction: row !important; justify-content: space-between !important; align-items: center !important; }
+            .logo-main { font-size: 0.95rem !important; }
+            .logo-sub { display: none !important; }
+            #userInfo { font-size: 0.7rem !important; padding: 3px 8px !important; border-radius: 12px; }
+
+            .container { margin: 4px auto !important; padding: 0 4px !important; }
+            .card { padding: 10px 8px !important; margin-bottom: 5px !important; border-radius: 10px !important; }
+            .portal-title { font-size: 1.05rem !important; }
+
+            .exam-layout { flex-direction: column !important; gap: 6px !important; }
+            .exam-sidebar { width: 100% !important; padding: 6px 8px !important; border-radius: 8px !important; margin-bottom: 4px !important; }
+
+            .palette-toggle-btn {
+                display: flex !important;
                 justify-content: space-between;
-                gap: 6px;
+                align-items: center;
+                background: #e2e8f0;
+                color: #1e293b;
+                padding: 6px 10px;
+                border-radius: 6px;
+                font-weight: 600;
+                font-size: 0.78rem;
+                cursor: pointer;
+                border: 1px solid #cbd5e1;
             }
-            .nav-btn-container .btn {
-                margin-bottom: 0 !important;
-                padding: 10px 8px !important;
-                font-size: 0.78rem !important;
-                flex: 1;
-                white-space: nowrap;
-            }
-            
-            /* Add bottom padding to prevent sticky bar overlap */
-            #examCard { padding-bottom: 75px; }
+
+            .palette-content { display: none; margin-top: 6px; }
+            .palette-content.open { display: block !important; }
+
+            .palette-grid { grid-template-columns: repeat(10, 1fr) !important; gap: 4px !important; max-height: 110px !important; }
+            .p-box { height: 25px !important; font-size: 0.7rem !important; border-radius: 4px !important; }
+
+            .palette-legend { margin-top: 6px !important; gap: 4px !important; font-size: 0.65rem !important; }
+            .legend-dot { width: 8px !important; height: 8px !important; }
+
+            #qContainer h3 { font-size: 0.88rem !important; margin-bottom: 8px !important; line-height: 1.25 !important; }
+            .option { padding: 8px 10px !important; font-size: 0.82rem !important; margin-bottom: 6px !important; border-radius: 6px !important; }
+
+            .nav-btn-container { margin-top: 8px !important; padding-top: 8px !important; gap: 6px !important; }
+            .nav-btn-container .btn { padding: 8px 10px !important; font-size: 0.8rem !important; margin-bottom: 0 !important; }
+
+            #examCard { padding-bottom: 10px !important; }
         }
     </style>
 </head>
-<body>
+<body oncontextmenu="return false;" oncopy="return false;" oncut="return false;" onpaste="return false;">
 
 <div id="loading"><div class="loader"></div><p style="margin-top:12px; font-weight:500; color:var(--dark);">Processing...</p></div>
 
@@ -265,9 +284,9 @@
         <div class="instruction-box">
             <h4>📝 Important Instructions:</h4>
             <ul>
-                <li>• Do not switch tabs during the exam (Max 3 warnings).</li>
-                <li>• You can mark questions for review and change answers anytime.</li>
-                <li>• Ensure a stable internet connection before starting.</li>
+                <li>• Do not switch tabs or exit Full-Screen during exam (Max 3 warnings).</li>
+                <li>• Violation of rules will result in auto-submission and <b>locking of certificate</b>.</li>
+                <li>• Copying or selecting question text is strictly prohibited.</li>
                 <li>• For newly registered users, <b>Phone Number</b> will be your Password.</li>
             </ul>
         </div>
@@ -293,33 +312,40 @@
         </div>
     </div>
 
-    <!-- EXAM CARD WITH PALETTE & STICKY BOTTOM BAR -->
+    <!-- EXAM CARD -->
     <div class="card" id="examCard" style="display:none;">
-        <p id="malpracticeWarning" style="color:red; font-weight:bold; display:none; margin-bottom:10px;">⚠️ Warning: Tab switch detected!</p>
+        <p id="malpracticeWarning" style="color:red; font-weight:bold; display:none; margin-bottom:10px;">⚠️ Warning: Malpractice / Tab switch / Fullscreen exit detected!</p>
         
         <div class="exam-layout">
+            <!-- QUESTION PALETTE SIDEBAR -->
+            <div class="exam-sidebar">
+                <div class="palette-toggle-btn" onclick="togglePalette()">
+                    <span>📊 Question Palette</span>
+                    <span id="paletteToggleIcon">▼ Show</span>
+                </div>
+
+                <div class="palette-content" id="paletteContent">
+                    <div class="palette-title" style="display:none;" id="desktopPaletteTitle">Question Palette</div>
+                    <div class="palette-grid" id="paletteGrid"></div>
+                    
+                    <div class="palette-legend">
+                        <div class="legend-item"><span class="legend-dot" style="background:var(--success)"></span> Attempted</div>
+                        <div class="legend-item"><span class="legend-dot" style="background:var(--danger)"></span> Unattempted</div>
+                        <div class="legend-item"><span class="legend-dot" style="background:var(--review)"></span> Review</div>
+                        <div class="legend-item"><span class="legend-dot" style="background:#e2e8f0"></span> Not Visited</div>
+                    </div>
+                </div>
+            </div>
+
             <!-- EXAM MAIN QUESTION AREA -->
             <div class="exam-main">
                 <div id="qContainer" style="text-align: left;"></div>
                 
-                <!-- NAVIGATION BUTTONS (FIXED ON MOBILE BOTTOM) -->
+                <!-- NAVIGATION BUTTONS -->
                 <div class="nav-btn-container">
                     <button id="prevBtn" class="btn btn-prev" onclick="prevQuestion()" style="display:none;">&larr; Prev</button>
                     <button id="reviewBtn" class="btn btn-review" onclick="toggleMarkForReview()">🟣 Review</button>
                     <button id="mainBtn" class="btn btn-next" onclick="nextQuestion()">Next &rarr;</button>
-                </div>
-            </div>
-
-            <!-- QUESTION PALETTE SIDEBAR -->
-            <div class="exam-sidebar">
-                <div class="palette-title">Question Palette</div>
-                <div class="palette-grid" id="paletteGrid"></div>
-                
-                <div class="palette-legend">
-                    <div class="legend-item"><span class="legend-dot" style="background:var(--success)"></span> Attempted</div>
-                    <div class="legend-item"><span class="legend-dot" style="background:var(--danger)"></span> Unattempted</div>
-                    <div class="legend-item"><span class="legend-dot" style="background:var(--review)"></span> Review</div>
-                    <div class="legend-item"><span class="legend-dot" style="background:#e2e8f0"></span> Not Visited</div>
                 </div>
             </div>
         </div>
@@ -362,6 +388,17 @@
     let examTargetTime = null, timerInterval = null;
     let questionStatus = [];
 
+    // BLOCK KEYBOARD SHORTCUTS
+    document.addEventListener('keydown', function(e) {
+        if (e.keyCode == 123 || 
+           (e.ctrlKey && e.shiftKey && (e.keyCode == 73 || e.keyCode == 74)) || 
+           (e.ctrlKey && (e.keyCode == 85 || e.keyCode == 67))) {
+            e.preventDefault();
+            alert("Security Alert: Keyboard shortcuts are disabled!");
+            return false;
+        }
+    });
+
     window.onload = async () => {
         try {
             const res = await fetch(`${scriptURL}?action=getQuestions`);
@@ -376,7 +413,6 @@
                 enableExamButton();
             }
         } catch(e) { 
-            console.log("Load Error", e);
             document.getElementById('displayTitle').innerText = "Online Assessment";
             enableExamButton();
         }
@@ -438,7 +474,6 @@
                 enableExamButton();
             }
         } catch(err) {
-            console.error("Timer Parsing Error: ", err);
             enableExamButton();
         }
     }
@@ -566,24 +601,72 @@
             alert("No questions available at the moment.");
             return;
         }
-        
-        questionStatus = new Array(questions.length).fill('not-visited');
+
+        requestFullScreen();
+
+        const savedDraft = localStorage.getItem(`p2t_exam_${student.email}_${testTitle}`);
+        if(savedDraft) {
+            if(confirm("आपली अर्धवट राहिलेली परीक्षा सापडली आहे. तिथूनच Resume करायची आहे का?")) {
+                const parsed = JSON.parse(savedDraft);
+                userAns = parsed.userAns || [];
+                questionStatus = parsed.questionStatus || [];
+                curIdx = parsed.curIdx || 0;
+            } else {
+                localStorage.removeItem(`p2t_exam_${student.email}_${testTitle}`);
+                questionStatus = new Array(questions.length).fill('not-visited');
+            }
+        } else {
+            questionStatus = new Array(questions.length).fill('not-visited');
+        }
         
         document.getElementById('loginCard').style.display = 'none';
         document.getElementById('examCard').style.display = 'block';
         renderQuestion();
     }
 
-    document.addEventListener("visibilitychange", () => {
-        if (document.hidden && document.getElementById('examCard').style.display === "block") {
+    function requestFullScreen() {
+        let elem = document.documentElement;
+        if (elem.requestFullscreen) { elem.requestFullscreen().catch(err => {}); } 
+        else if (elem.webkitRequestFullscreen) { elem.webkitRequestFullscreen(); } 
+        else if (elem.msRequestFullscreen) { elem.msRequestFullscreen(); }
+    }
+
+    document.addEventListener("visibilitychange", triggerMalpractice);
+    document.addEventListener("fullscreenchange", () => {
+        if (!document.fullscreenElement && document.getElementById('examCard').style.display === "block") {
+            triggerMalpractice();
+        }
+    });
+
+    function triggerMalpractice() {
+        if (document.getElementById('examCard').style.display === "block") {
             malCount++;
             document.getElementById('malpracticeWarning').style.display = "block";
             if(malCount >= 3) {
-                alert("Auto-submitting due to malpractice.");
+                alert("Auto-submitting exam due to multiple malpractice warnings.");
                 submitExam(true);
             }
         }
-    });
+    }
+
+    function togglePalette() {
+        const content = document.getElementById('paletteContent');
+        const icon = document.getElementById('paletteToggleIcon');
+        if (content.classList.contains('open')) {
+            content.classList.remove('open');
+            icon.innerText = "▼ Show";
+        } else {
+            content.classList.add('open');
+            icon.innerText = "▲ Hide";
+        }
+    }
+
+    function saveDraftLocally() {
+        if(student.email) {
+            const draftData = { userAns: userAns, questionStatus: questionStatus, curIdx: curIdx };
+            localStorage.setItem(`p2t_exam_${student.email}_${testTitle}`, JSON.stringify(draftData));
+        }
+    }
 
     function renderQuestion() {
         const q = questions[curIdx];
@@ -595,16 +678,15 @@
         }
 
         document.getElementById('qContainer').innerHTML = `
-            <p style="color:var(--primary); font-weight:600; margin-bottom:5px;">Question ${curIdx+1} of ${questions.length}</p>
-            <h3 style="margin-bottom:15px; line-height: 1.4; font-size:1.05rem;">${q[1]}</h3>
+            <p style="color:var(--primary); font-weight:600; margin-bottom:5px; font-size:0.85rem;">Question ${curIdx+1} of ${questions.length}</p>
+            <h3 style="margin-bottom:12px; line-height: 1.35; font-size:0.98rem;">${q[1]}</h3>
             <label class="option"><input type="radio" name="opt" value="A" ${savedAnswer === 'A' ? 'checked' : ''} onchange="autoSaveOption('A')"> A. ${q[2]}</label>
             <label class="option"><input type="radio" name="opt" value="B" ${savedAnswer === 'B' ? 'checked' : ''} onchange="autoSaveOption('B')"> B. ${q[3]}</label>
             <label class="option"><input type="radio" name="opt" value="C" ${savedAnswer === 'C' ? 'checked' : ''} onchange="autoSaveOption('C')"> C. ${q[4]}</label>
             <label class="option"><input type="radio" name="opt" value="D" ${savedAnswer === 'D' ? 'checked' : ''} onchange="autoSaveOption('D')"> D. ${q[5]}</label>
         `;
 
-        const prevBtn = document.getElementById('prevBtn');
-        prevBtn.style.display = curIdx > 0 ? "inline-block" : "none";
+        document.getElementById('prevBtn').style.display = curIdx > 0 ? "inline-block" : "none";
 
         const reviewBtn = document.getElementById('reviewBtn');
         if (questionStatus[curIdx] === 'review') {
@@ -625,6 +707,7 @@
         }
 
         renderPalette();
+        saveDraftLocally();
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
@@ -641,6 +724,7 @@
             questionStatus[curIdx] = 'attempted';
         }
         renderPalette();
+        saveDraftLocally();
     }
 
     function toggleMarkForReview() {
@@ -670,6 +754,11 @@
     function jumpToQuestion(idx) {
         curIdx = idx;
         renderQuestion();
+        if (window.innerWidth <= 768) {
+            const content = document.getElementById('paletteContent');
+            if (content) content.classList.remove('open');
+            document.getElementById('paletteToggleIcon').innerText = "▼ Show";
+        }
     }
 
     function nextQuestion() {
@@ -696,7 +785,6 @@
         for (let i = 0; i < questions.length; i++) {
             const q = questions[i];
             const ans = userAns[i] ? userAns[i].uSelected : "";
-            
             if (ans === String(q[6]).trim()) score++;
 
             finalResponses.push({
@@ -717,12 +805,13 @@
 
         try {
             await fetch(scriptURL, { method: 'POST', body: JSON.stringify(payload) });
+            localStorage.removeItem(`p2t_exam_${student.email}_${testTitle}`);
             hideLoader();
-            showResult(score, questions.length);
+            showResult(score, questions.length, isMal);
         } catch(e) { location.reload(); }
     }
 
-    function showResult(s, t) {
+    function showResult(s, t, isMal) {
         document.getElementById('examCard').style.display = 'none';
         document.getElementById('resultCard').style.display = 'block';
         const percentage = Math.round((s/t)*100);
@@ -731,8 +820,28 @@
         if(percentage < 60) badge = "🥉 Bronze Performer";
         else if(percentage < 80) badge = "🥈 Silver Performer";
 
+        // CERTIFICATE BUTTON DYNAMIC LOGIC (LOCKED IF MALPRACTICE)
+        let certBtnHtml = "";
+        if (isMal) {
+            certBtnHtml = `
+                <div class="btn btn-cert-portal btn-cert-locked">
+                    🔒 Certificate Locked (Violation Detected)
+                </div>
+                <p style="font-size:0.75rem; color:var(--danger); margin-top:6px; font-weight:600;">
+                    ⚠️ Malpractice / Tab Switching rules were violated. Certificate issuance is permanently disabled for this attempt.
+                </p>`;
+        } else {
+            certBtnHtml = `
+                <a href="${certVerificationURL}" target="_blank" class="btn btn-cert-portal">
+                    📜 Get Verified Scorecard & Certificate &rarr;
+                </a>
+                <p style="font-size:0.75rem; color:#64748b; margin-top:6px;">Click above to download your verified certificate from the official portal.</p>`;
+        }
+
         document.getElementById('resultCard').innerHTML = `
             <h2 style="margin-bottom:10px; color: var(--primary);">Assessment Scorecard Summary</h2>
+            ${isMal ? '<p style="color:var(--danger); font-weight:bold; font-size:0.85rem; margin-bottom:10px;">⚠️ EXAM AUTO-SUBMITTED DUE TO RULE VIOLATION</p>' : ''}
+            
             <div style="font-size:0.85rem; font-weight:600; color:var(--gold); margin-bottom:15px; background:#fffbe8; padding:5px 12px; border-radius:15px; display:inline-block; border:1px solid #fde68a;">${badge}</div>
             
             <div style="position: relative; width: 150px; height: 150px; margin: 0 auto 20px;">
@@ -748,15 +857,11 @@
                 <p style="margin-bottom:6px;"><b>Total Questions:</b> ${t}</p>
                 <p style="margin-bottom:6px;"><b>Correct Answers:</b> <span style="color:var(--success); font-weight:bold;">${s}</span></p>
                 <p style="margin-bottom:6px;"><b>Wrong Answers:</b> <span style="color:var(--danger); font-weight:bold;">${t - s}</span></p>
-                <p><b>Status:</b> <span style="background:var(--success); color:white; padding:2px 8px; border-radius:4px; font-size:0.78rem;">OFFICIALLY VERIFIED</span></p>
+                <p><b>Status:</b> ${isMal ? '<span style="background:var(--danger); color:white; padding:2px 8px; border-radius:4px; font-size:0.78rem;">FAILED (Malpractice)</span>' : '<span style="background:var(--success); color:white; padding:2px 8px; border-radius:4px; font-size:0.78rem;">OFFICIALLY VERIFIED</span>'}</p>
             </div>
 
-            <!-- CREATIVE REDIRECT BUTTON TO CERTIFICATE VERIFICATION PORTAL -->
             <div style="max-width:400px; margin: 0 auto 15px;">
-                <a href="${certVerificationURL}" target="_blank" class="btn btn-cert-portal">
-                    📜 Get Verified Scorecard & Certificate &rarr;
-                </a>
-                <p style="font-size:0.75rem; color:#64748b; margin-top:6px;">Click above to download your verified certificate from the official portal.</p>
+                ${certBtnHtml}
             </div>
 
             <button class="btn btn-view" style="width: 100%; max-width:400px; background:#64748b;" onclick="location.reload()">Finish & Exit</button>
@@ -776,10 +881,7 @@
                 }]
             },
             options: { 
-                plugins: { 
-                    legend: { display: false },
-                    tooltip: { enabled: true }
-                },
+                plugins: { legend: { display: false }, tooltip: { enabled: true } },
                 maintainAspectRatio: false
             }
         });
@@ -799,6 +901,12 @@
         
         let html = "";
         historyData.forEach((item, idx) => {
+            let isMal = item.status && item.status.includes("Malpractice");
+            
+            let certActionHtml = isMal 
+                ? `<div class="btn btn-cert-portal btn-cert-locked" style="flex:1; margin:0; padding:8px 12px; font-size:0.75rem;">🔒 Cert Locked</div>`
+                : `<a href="${certVerificationURL}" target="_blank" class="btn btn-cert-portal" style="flex:1; margin:0; padding:8px 12px; font-size:0.8rem;">📜 Certificate</a>`;
+
             html += `
             <div class="history-item">
                 <div style="display:flex; justify-content:space-between; align-items:center;">
@@ -811,8 +919,8 @@
                     </div>
                 </div>
                 <div style="display:flex; gap:8px; margin-top:5px;">
-                    <button class="btn btn-view" style="flex:1; margin:0; padding:8px 12px; font-size:0.8rem;" onclick="viewReview(${idx})">🔍 View Answers Review</button>
-                    <a href="${certVerificationURL}" target="_blank" class="btn btn-cert-portal" style="flex:1; margin:0; padding:8px 12px; font-size:0.8rem;">📜 Download Scorecard</a>
+                    <button class="btn btn-view" style="flex:1; margin:0; padding:8px 12px; font-size:0.8rem;" onclick="viewReview(${idx})">🔍 View Review</button>
+                    ${certActionHtml}
                 </div>
             </div>`;
         });
